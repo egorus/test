@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import tz from 'moment-timezone';
 
-
 export default class ClockTemplate extends Component{
 
     getTimeData(date, tz) {
         let time = date.tz(tz);
         let millis = time.millisecond();
-        let second = time.second() * 6;
-        let minute = time.minute() * 6 + second / 60;
-        let hour = ((time.hour() % 12) / 12) * 360 + 90 + minute / 12;
-
+        let second = time.second() * 6 + millis * (6 / 1000) - 90;
+        let minute = time.minute() * 6 - 90;
+        let hour = (time.hour() * 30) + minute / 2 - 90;
         return {
             digitalValue : time.format('LTS'),
             second: second,

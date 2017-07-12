@@ -38031,7 +38031,7 @@ var Clock = function (_Component) {
 
         _this.state = {
             date: (0, _moment2.default)(),
-            tz: ['America/Los_Angeles', 'Australia/Sydney', "Europe/London", 'Asia/Tokyo']
+            tz: ['Europe/Kiev', 'Australia/Sydney', 'Europe/London', 'Asia/Tokyo']
         };
         return _this;
     }
@@ -38039,27 +38039,24 @@ var Clock = function (_Component) {
     _createClass(Clock, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.start();
-        }
-    }, {
-        key: 'start',
-        value: function start() {
-            var self = this;
-            (function tick() {
-                self.setState({ date: (0, _moment2.default)() });
-                requestAnimationFrame(tick);
-            })();
+            var _this2 = this;
+
+            setInterval(function () {
+                _this2.setState({
+                    date: (0, _moment2.default)()
+                });
+            }, 1000);
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return _react2.default.createElement(
                 'div',
                 { className: 'clocks' },
                 this.state.tz.map(function (tz, i) {
-                    return _react2.default.createElement(_clockTemplate2.default, { key: i, date: _this2.state.date, tz: tz });
+                    return _react2.default.createElement(_clockTemplate2.default, { key: i, date: _this3.state.date, tz: tz });
                 })
             );
         }
@@ -38366,8 +38363,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js!./styles.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js!./styles.css");
+		module.hot.accept("!!../../node_modules/css-loader/index.js!./styles.css", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!./styles.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -38385,7 +38382,7 @@ exports = module.exports = __webpack_require__(305)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n    background: black;\n}\n\n.clocks {\n    display: flex;\n    justify-content: space-between;\n    flex-wrap: wrap;\n}\n\n.clock {\n    margin: 30px 20px;\n}\n\n.clock__text {\n    font: 14px Arial, sans-serif;\n    color: white;\n    margin: 10px 0;\n    text-align: center;\n}\n\nh3.clock__text {\n    font-weight: bold;\n}\n\n.clock__dial {\n    border-radius: 50%;\n    width: 200px;\n    border: 5px solid white;\n    height: 200px;\n    position: relative;\n    margin: 10px 0;\n}\n\n.clock__dial:before {\n    content: '';\n    display: block;\n    position: absolute;\n    transform: translate(-50%, -50%);\n    top: 50%; left: 50%;\n    background: white;\n    z-index: 3;\n    width: 10px;\n    height: 10px;\n    border-radius: 50%;\n}\n\n.clock__label {\n    font-size: 12px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    color: white;\n}\n\n.clock__labels {\n    top: 48%;\n    position: relative;\n    left: -2%;\n}\n\n.arrow {\n    background: white;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform-origin: 0px 0px;\n}\n\n.arrow__hour {\n    width: 27%;\n    height: 3px;\n}\n\n.arrow__minute {\n    width: 35%;\n    height: 2px;\n}\n\n.arrow__second {\n    width: 45%;\n    height: 1px;\n    background: #D40000;\n}", ""]);
+exports.push([module.i, "body {\n    background: black;\n}\n\n.clocks {\n    display: flex;\n    justify-content: space-between;\n    flex-wrap: wrap;\n}\n\n.clock {\n    margin: 30px 20px;\n}\n\n.clock__text {\n    font: 14px Arial, sans-serif;\n    color: white;\n    margin: 10px 0;\n    text-align: center;\n}\n\nh3.clock__text {\n    font-weight: bold;\n}\n\n.clock__dial {\n    border-radius: 50%;\n    width: 200px;\n    border: 5px solid white;\n    height: 200px;\n    position: relative;\n    margin: 10px 0;\n}\n\n.clock__dial:before {\n    content: '';\n    display: block;\n    position: absolute;\n    transform: translate(-50%, -50%);\n    top: 50%; left: 50%;\n    background: white;\n    z-index: 3;\n    width: 10px;\n    height: 10px;\n    border-radius: 50%;\n}\n\n.clock__label {\n    font-size: 12px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    color: white;\n}\n\n.clock__labels {\n    top: 48%;\n    position: relative;\n    left: -2%;\n}\n\n.arrow {\n    background: white;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform-origin: 0px 0px;\n}\n\n.arrow__hour {\n    width: 25%;\n    height: 3px;\n}\n\n.arrow__minute {\n    width: 40%;\n    height: 2px;\n}\n\n.arrow__second {\n    width: 45%;\n    height: 1px;\n    background: #D40000;\n}\n\n\n", ""]);
 
 // exports
 
@@ -38910,10 +38907,9 @@ var ClockTemplate = function (_Component) {
         value: function getTimeData(date, tz) {
             var time = date.tz(tz);
             var millis = time.millisecond();
-            var second = time.second() * 6;
-            var minute = time.minute() * 6 + second / 60;
-            var hour = time.hour() % 12 / 12 * 360 + 90 + minute / 12;
-
+            var second = time.second() * 6 + millis * (6 / 1000) - 90;
+            var minute = time.minute() * 6 - 90;
+            var hour = time.hour() * 30 + minute / 2 - 90;
             return {
                 digitalValue: time.format('LTS'),
                 second: second,

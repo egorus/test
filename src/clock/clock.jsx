@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import './styles.css';
+import '../styles/styles.css';
 import ClockTemplate from './clockTemplate.jsx';
 
 export default class Clock extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             date: moment(),
-            tz: ['America/Los_Angeles', 'Australia/Sydney', "Europe/London", 'Asia/Tokyo']
+            tz: ['Europe/Kiev', 'Australia/Sydney', 'Europe/London', 'Asia/Tokyo']
         }
     }
 
     componentDidMount() {
-        this.start();
+        setInterval(() => {
+            this.setState({
+                date: moment()
+            })
+        }, 1000);
     }
 
-    start() {
-        var self = this;
-        (function tick() {
-            self.setState({ date: moment() });
-            requestAnimationFrame(tick);
-        })();
-    }
     render() {
         return (
             <div className="clocks">

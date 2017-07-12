@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Clock  from './clock.jsx';
+import Clock  from './clock/clock.jsx';
 
 class App extends Component {
     render(){
