@@ -1,0 +1,84 @@
+body {
+    background: black;
+}
+
+.clocks {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.clock {
+    margin: 30px 20px;
+}
+
+.clock__text {
+    font: 14px Arial, sans-serif;
+    color: white;
+    margin: 10px 0;
+    text-align: center;
+}
+
+h3.clock__text {
+    font-weight: bold;
+}
+
+.clock__dial {
+    border-radius: 50%;
+    width: 200px;
+    border: 5px solid white;
+    height: 200px;
+    position: relative;
+    margin: 10px 0;
+}
+
+.clock__dial:before {
+    content: '';
+    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%; left: 50%;
+    background: white;
+    z-index: 3;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.clock__label {
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+}
+
+.clock__labels {
+    top: 48%;
+    position: relative;
+    left: -2%;
+}
+
+.arrow {
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0px 0px;
+}
+
+.arrow__hour {
+    width: 27%;
+    height: 3px;
+}
+
+.arrow__minute {
+    width: 35%;
+    height: 2px;
+}
+
+.arrow__second {
+    width: 45%;
+    height: 1px;
+    background: #D40000;
+}
