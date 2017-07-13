@@ -38906,15 +38906,15 @@ var ClockTemplate = function (_Component) {
         key: 'getTimeData',
         value: function getTimeData(date, tz) {
             var time = date.tz(tz);
-            var millis = time.millisecond();
-            var second = time.second() * 6 + millis * (6 / 1000) - 90;
+            var second = time.second() * 6 - 90;
             var minute = time.minute() * 6 - 90;
             var hour = time.hour() * 30 + minute / 2 - 90;
+            console.log(time.hour);
             return {
-                digitalValue: time.format('LTS'),
                 second: second,
                 minute: minute,
-                hour: hour
+                hour: hour,
+                format: time.format('LTS')
             };
         }
     }, {
@@ -38922,6 +38922,7 @@ var ClockTemplate = function (_Component) {
         value: function render() {
             var labels = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
             var time = this.getTimeData(this.props.date, this.props.tz);
+            console.log(time.hour);
             return _react2.default.createElement(
                 'div',
                 { className: 'clock' },
@@ -38936,9 +38937,21 @@ var ClockTemplate = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'clock__dial' },
-                        _react2.default.createElement('div', { className: 'arrow arrow__second', style: this.transform(this.rotate(time.second)) }),
-                        _react2.default.createElement('div', { className: 'arrow arrow__hour ', style: this.transform(this.rotate(time.hour)) }),
-                        _react2.default.createElement('div', { className: 'arrow arrow__minute', style: this.transform(this.rotate(time.minute)) }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'arrow arrow__second', style: { transform: 'rotate(' + time.second + 'deg)' } },
+                            ' '
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'arrow arrow__minute', style: { transform: 'rotate(' + time.minute + 'deg)' } },
+                            ' '
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'arrow arrow__hour ', style: { transform: 'rotate(' + time.hour + 'deg)' } },
+                            ' '
+                        ),
                         _react2.default.createElement(
                             'div',
                             { className: 'clock__labels' },
@@ -38960,19 +38973,9 @@ var ClockTemplate = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'clock__text' },
-                    time.digitalValue
+                    time.format
                 )
             );
-        }
-    }, {
-        key: 'transform',
-        value: function transform(str) {
-            return { transform: str };
-        }
-    }, {
-        key: 'rotate',
-        value: function rotate(deg) {
-            return 'rotate(' + deg + 'deg)';
         }
     }]);
 
